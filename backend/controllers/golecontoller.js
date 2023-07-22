@@ -6,12 +6,12 @@ const asyncHandler = require('express-async-handler');
 //@access Private
 
 
-const getGoale = async (req, res)=>{
+const getGoale = asyncHandler(async (req, res)=>{
    
     res.status(200).json({
         message: " working get request",
     })
-}
+})
 
 
 
@@ -20,7 +20,7 @@ const getGoale = async (req, res)=>{
 //@access Private
 
 
-const setGoal =async (req, res)=>{
+const setGoal = asyncHandler(async (req, res)=>{
     if(!req.body.text){
         res.status(400)
         throw new Error('please add a text field')
@@ -28,7 +28,7 @@ const setGoal =async (req, res)=>{
     res.status(200).json({
         message: " working post request",
     })
-}
+})
 
 
 
@@ -37,11 +37,11 @@ const setGoal =async (req, res)=>{
 //@access Private
 
 
-const UpdateGoale =async (req, res)=>{
+const UpdateGoale = asyncHandler(async (req, res)=>{
    res.status(200).json({
         message: `workaing delete req ${req.params.id}`,
     })
-}
+})
 
 
 
@@ -52,11 +52,11 @@ const UpdateGoale =async (req, res)=>{
 
 
 
-const DeleteGoale =async (req, res)=>{
+const DeleteGoale =asyncHandler(  async (req, res)=>{
     res.status(200).json({
         message: `workaing delete req ${req.params.id}`,
     })
-}
+})
 
 
 

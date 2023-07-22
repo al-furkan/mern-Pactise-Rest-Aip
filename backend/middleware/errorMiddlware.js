@@ -9,7 +9,6 @@ const errorHandaler = (err, req, res,next) =>{
 
 }
 
-
 module.exports = {
     errorHandaler,
 }
