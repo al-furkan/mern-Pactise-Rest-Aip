@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Gole = require('../model/golemodel');
-
+const User = require('../model/userModel');
 
 
 //@desc get goals
@@ -9,7 +9,7 @@ const Gole = require('../model/golemodel');
 
 
 const getGoale = asyncHandler(async (req, res)=>{
-    const goals =await Gole.find()
+    const goals =await Gole.find({user: req.user.id})
     res.status(200).json(goals)
 })
 
@@ -26,12 +26,14 @@ const setGoal = asyncHandler(async (req, res)=>{
         throw new Error('please add a text field')
        }
       const gole = await Gole.create({
-        text:req.body.text
+        text:req.body.text,
+        user:req.user.id
       })
 
     res.status(200).json(gole)
 })
 
+ 
 
 
 //@desc Update goals
@@ -46,6 +48,22 @@ const UpdateGoale = asyncHandler(async (req, res)=>{
     if(!gole){
         res.status(400)
         throw new Error('gole not Found');
+    }
+    
+    
+    const user = await User.findById(req.user.id)
+
+
+    //Check for user
+   
+    if(!user){
+       res.status(401)
+       throw new Error('User not Found')
+    }
+    // Make sure the logged in user matches the gole User
+    if(gole.user.toString()!== user.id){
+        res.status(401)
+        throw new Error('User not authorized')
     }
 
    const  updateGole = await Gole.findByIdAndUpdate(req.params.id, req.body,{
@@ -70,6 +88,21 @@ const deleteGoale =asyncHandler(async (req, res)=>{
     if(!gole){
         res.status(400)
         throw new Error('gole not Found');
+    }
+
+    const user = await User.findById(req.user.id)
+
+
+    //Check for user
+   
+    if(!user){
+       res.status(401)
+       throw new Error('User not Found')
+    }
+    // Make sure the logged in user matches the gole User
+    if(gole.user.toString()!== user.id){
+        res.status(401)
+        throw new Error('User not authorized')
     }
 
     await gole.remove();
