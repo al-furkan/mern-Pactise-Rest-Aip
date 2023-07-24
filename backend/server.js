@@ -1,9 +1,14 @@
 const express = require('express');
+
+const color = require('colors')
+
 const router = require('./routes/goalRoutes');
-const { errorHandaler } = require('./middleware/errorMiddlware');
+const { errorHandler } = require('./middleware/errorMiddlware');
+const connectDB = require('../config/db');
+const Userouter = require('./routes/userRoutes');
 const  dotenv = require('dotenv').config();
 const port =process.env.PORT || 5000;
-
+ connectDB();
 
 
 const app = express();
@@ -14,10 +19,13 @@ app.use(express.urlencoded({ extended: false}))
 
 
 app.use('/api/goals',router);
+app.use('/api/user',Userouter);
 
 
-app.use(errorHandaler);
+
+app.use(errorHandler);
 
 app.listen(port, ()=>{
     console.log (`server is running on port https//localhost: ${port}`);
+    
 })

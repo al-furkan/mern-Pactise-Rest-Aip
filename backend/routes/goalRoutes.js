@@ -1,5 +1,5 @@
 const express = require('express');
-const { getGoale, setGoal, UpdateGoale, DeleteGoale } = require('../controllers/golecontoller');
+const { getGoale, setGoal, UpdateGoale, deleteGoale } = require('../controllers/golecontoller');
 const router = express.Router();
 
 //get request
@@ -16,7 +16,7 @@ router.put('/:id', UpdateGoale)
 
 // delete request
 
-router.delete('/:id',DeleteGoale )
+router.delete('/:id',deleteGoale )
 
 
 
