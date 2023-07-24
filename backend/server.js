@@ -4,8 +4,8 @@ const color = require('colors')
 
 const router = require('./routes/goalRoutes');
 const { errorHandler } = require('./middleware/errorMiddlware');
-const connectDB = require('../config/db');
 const Userouter = require('./routes/userRoutes');
+const connectDB = require('./config/db');
 const  dotenv = require('dotenv').config();
 const port =process.env.PORT || 5000;
  connectDB();
